@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nikhil Music Player</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#0f0f0f;
+    color:white;
+    padding:15px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+    color:#00ff88;
+}
+
+.player{
+    background:#1b1b1b;
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:20px;
+    box-shadow:0 0 10px rgba(0,255,136,0.3);
+}
+
+.nowPlaying{
+    text-align:center;
+    margin-bottom:10px;
+    font-size:18px;
+    color:#00ff88;
+}
+
+audio{
+    width:100%;
+}
+
+.search{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    margin-bottom:15px;
+    background:#222;
+    color:white;
+    font-size:16px;
+}
+
+.song{
+    background:#1a1a1a;
+    padding:14px;
+    margin-bottom:10px;
+    border-radius:12px;
+    cursor:pointer;
+    transition:0.2s;
+    border:1px solid #333;
+}
+
+.song:hover{
+    background:#00ff88;
+    color:black;
+    transform:scale(1.02);
+}
+
+.songName{
+    font-size:16px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎵 Nikhil Music Player</h1>
+
+<div class="player">
+    <div class="nowPlaying" id="nowPlaying">
+        कोई गाना चालू नहीं है
+    </div>
+
+    <audio id="audio" controls></audio>
+</div>
+
+<input type="text" class="search" id="search" placeholder="गाना खोजो...">
+
+<div id="songList"></div>
+
+<script>
+
+const songs = [
+
+"AAoge Tum Kabhi.mp3",
+"Allah Waariyan.mp3",
+"Bewajah.mp3",
+"Chaudhary.mp3",
+"Choo Lo.mp3",
+"Comfort Chain.mp3",
+"Dagabaaz Re.mp3",
+"Dr. Dog - Where'd All the Time Go (SPOTISAVER).mp3",
+"Dramamine.mp3",
+"Fearless pt. II.mp3",
+"Fool.mp3",
+"Himesh Reshammiya, Arijit Singh - Tera Chehra (SPOTISAVER).mp3",
+"Hook Raja Ji.mp3",
+"I Wanna Love You.mp3",
+"Kabira.mp3",
+"Kaise Hua (From Kabir Singh).mp3",
+"Koi Tumsa Nahin.mp3",
+"Lonely.mp3",
+"Louca Encubada.mp3",
+"Luka Chuppi.mp3",
+"Mareux - The Perfect Girl (SPOTISAVER).mp3",
+"Mary On A Cross.mp3",
+"Meaning of Life.mp3",
+"Notion.mp3",
+"Pal Pal Dil Ke Paas - From Blackmail.mp3",
+"Phir Se Ud Chala.mp3",
+"Pee Loon (SPOTISAVER).mp3",
+"Tum Jo Aaye (SPOTISAVER).mp3",
+"Sapphire.mp3",
+"Saware.mp3",
+"snowfall.mp3",
+"Somewhere Only We Know.mp3",
+"Sonic Fireworks (Free Fire 6th Anniversary Lobby).mp3",
+"Sorry.mp3",
+"Sweater Weather.mp3",
+"Tera Hone Laga Hoon.mp3",
+"Tere Mast Mast Do Nain.mp3",
+"The Creed of Fire.mp3",
+"Tujhe Kitna Chahne Lage (From Kabir Singh).mp3",
+"Tune Mere Jana.mp3",
+"Waka Waka.mp3",
+"Wavin' Flag.mp3",
+"Winderlands 1.mp3",
+"Woh Lamhe Woh Baatein.mp3",
+"Ye Tune Kya Kiya.mp3",
+"Zara Sa.mp3"
+
+];
+
+const songList = document.getElementById("songList");
+const audio = document.getElementById("audio");
+const nowPlaying = document.getElementById("nowPlaying");
+const search = document.getElementById("search");
+
+function loadSongs(filter=""){
+    songList.innerHTML = "";
+
+    songs
+    .filter(song => song.toLowerCase().includes(filter.toLowerCase()))
+    .forEach(song => {
+
+        const div = document.createElement("div");
+        div.className = "song";
+
+        div.innerHTML = `
+            <div class="songName">${song.replace(".mp3","")}</div>
+        `;
+
+        div.onclick = () => {
+            audio.src = song;
+            audio.play();
+            nowPlaying.innerText = "🎶 " + song.replace(".mp3","");
+        };
+
+        songList.appendChild(div);
+    });
+}
+
+search.addEventListener("input", () => {
+    loadSongs(search.value);
+});
+
+loadSongs();
+
+</script>
+
+</body>
+</html>
